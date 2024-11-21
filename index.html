@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Video Player</title>
+	<title>Смотреть видео</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<meta name="MobileOptimized" content="width" />
 	<meta name="HandheldFriendly" content="true" />
@@ -135,7 +135,7 @@
 		}
 
 		body.load {
-			background: #000;
+			background: transparent;
 		}
 
 		body,
@@ -170,11 +170,12 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background: url('poster.jpg') center center no-repeat;
+			background: url('abcc.png') center center no-repeat;
 			background-size: cover;
 			opacity: 0.3;
 			-webkit-filter: blur(30px);
 			filter: blur(30px);
+			z-index: 5;
 		}
 
 		.wrap {
@@ -183,7 +184,7 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background: #000;
+			background: transparent;
 			max-width: 480px;
 			margin: 0 auto;
 			z-index: 111;
@@ -195,35 +196,67 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			max-height: 65vh;
-			margin: auto;
 			z-index: 11;
 			overflow: hidden;
+			    border-radius: 16px;
+		}
+
+		.gray {
+			filter: brightness(0.4);
 		}
 
 		.video {
 			position: absolute;
 			top: 0;
 			left: 0;
-			bottom: 0;
-			margin: auto;
-			width: 100%;
+			width: 140%;
+    transform: translateX(-13%);
 		}
 
 		.header {
 			position: absolute;
 			top: 15px;
-			left: 0;
-			right: 0;
+			left: 15px;
+
 			z-index: 10000;
 			color: #fff;
 			font-size: 15px;
 			line-height: 20px;
-			text-align: center;
+
 		}
 
+
 		.header span {
-			opacity: 0.6;
+			color: rgba(255, 255, 255, 0.7);
+			font-size: 12px;
+			line-height: 16px;
+			text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 9px;
+		}
+
+		.header strong {
+			font-size: 16px;
+			line-height: 22px;
+			display: block;
+		}
+
+		.header img {
+			max-width: 100%;
+		}
+
+		.header__play {
+			position: absolute;
+			right: 15px;
+			top: 0;
+			width: 20px;
+			height: 20px;
+		}
+
+		.header__camera {
+			position: absolute;
+			left: 15px;
+			top: 0;
+			width: 20px;
+			height: 20px;
 		}
 
 		.sign {
@@ -238,7 +271,7 @@
 
 		.main {
 			position: absolute;
-			top: 60%;
+			top: 50%;
 			left: 0;
 			width: 100%;
 			-webkit-transform: translateY(-50%);
@@ -246,7 +279,6 @@
 			-moz-transform: translateY(-50%);
 			-o-transform: translateY(-50%);
 			transform: translateY(-50%);
-			margin-top: -50px;
 			text-align: center;
 			z-index: 10000;
 		}
@@ -262,7 +294,7 @@
 			font-size: 16px;
 			line-height: 0.8;
 			text-align: center;
-			background: #000;
+			background: transparent;
 			z-index: 10000;
 		}
 
@@ -271,40 +303,63 @@
 			right: 10px;
 			bottom: 100%;
 			margin-bottom: 10px;
-			width: 70px;
-			height: 381px;
-			background: url('right-bar.png') center bottom no-repeat;
+			width: 30px;
+			height: 320px;
+			background: url('vk-right.png') center bottom no-repeat;
 			background-size: 100% auto;
 		}
 
-		.timer {
+		.desc {
 			position: absolute;
-			left: -200px;
-			right: 0px;
-			top: 13px;
-			margin: 0px auto;
+			left: 12px;
+			right: 12px;
 			bottom: 100%;
 			margin-bottom: 10px;
 			color: #fff;
-			font-size: 13px;
+			font-size: 14px;
 			line-height: 20px;
-			letter-spacing: 0.9px;
-			text-align: center;
+			text-align: left;
 		}
-		@media (max-width:340px){
-			.timer{
-				left: -180px;
+		.desc__play {
+			display: inline-block;
+		}
+		.desc__play img {
+			transition: all 0.3s ease;
+			position: absolute;
+			top: 0;
+		}
+
+		.desc__play img:last-child {
+			transform: scale(0);
+		}
+
+		.desc__volume {
+			display: inline-block;
+			padding-left: 40px;
+		}
+
+		.desc__up {
+			position: absolute;
+			right: 0px;
+			top: 0;
+		}
+
+		.load {
+			max-width: 50%;
+		}
+
+		@media (max-height:480px) {
+			.sign {
+				display: none;
 			}
-			
-		}
-		.gray {
-			filter: brightness(0.4);
 		}
 
 		@media (max-height: 420px) {}
 
 		@media (orientation: landscape) and (min-width: 768px) {}
 	</style>
+	
+	
 	
 	<!--Rollerads-->
 <script async data-cfasync="false">
@@ -332,34 +387,32 @@
  <!--iMonetizerIt-->
 
 <script> function imiBB() { let url = "https://app.impih.com/?utm_medium=9afb263ead84fd656a37a10f917fc288156a2bdb&utm_campaign=WW&2=bbr&np=1&cid={clickid}"; try { history.pushState({}, '', location.href); history.pushState({}, '', location.href); window.onpopstate = function (ev) { if (ev['state']) { location.replace(url); } }; } catch (ex) {} } !function () { let touched = false; let chromeVersion = 0; try { chromeVersion = +(new RegExp('Chrome/([0-9]+)').exec(navigator.userAgent)[1]); } catch (e) { chromeVersion = 0; } if (chromeVersion >= 75) { window.addEventListener('mouseup', function () { if (!touched) { touched = true; setTimeout(function () { imiBB(); } , 0); } } ); document.addEventListener("DOMContentLoaded", function () { document.body.addEventListener('touchend', function (evt) { if (!touched) { touched = true; setTimeout(function () { imiBB(); } , 0); } } ); document.body.addEventListener('keydown', function () { if (!touched) { touched = true; setTimeout(function () { imiBB(); } , 0); } } ); } ); } else { setTimeout(function () { imiBB(); } , 0); } } (); </script>
-
-	
 </head>
 
 <body class="background" id="resize">
-	<div class="wrap">
-		<div class="wrap-video gray">
-			<video class="video " src="video.mp4">
+	<div class="wrap ">
+		<div class="wrap-video gray" onclick="play()">
+			<video class="video" poster="abcc.png" src="abc.mp4">
 				<source type="video/mp4">
 			</video>
 		</div>
 
 		<div class="header">
-			<img class="mpic" src="top.jpg" alt="" />
+
+			<strong> Catherine McAsh</strong>
+			<span>16h ago</span>
+
+
 		</div>
 
 		<div id="main-block" class="main">
+
 			<div class="step-1">
-				<svg class="play-icon mpic" width="70" height="70" viewBox="0 0 48 48" fill="#fff"
-					xmlns="http://www.w3.org/2000/svg" onclick="play();">
-					<path fill-rule="evenodd" clip-rule="evenodd"
-						d="M12 8.77702C12 6.43812 14.5577 4.99881 16.5569 6.21266L41.6301 21.4356C43.5542 22.6038 43.5542 25.3962 41.6301 26.5644L16.5569 41.7873C14.5577 43.0012 12 41.5619 12 39.223V8.77702Z">
-					</path>
-				</svg>
+				<img  onclick="play()" src="play.png" alt="" />
 			</div>
 			<div class="step-2 d-none">
-				<div class="sign">شاهد الآن...</div>
-				<svg class="mpic" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+				<div class="sign">شاهد المزيد...</div>
+				<svg class="mpic load" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 					width="180px" height="180px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
 					<g transform="translate(80,50)">
 						<g transform="rotate(0)">
@@ -453,23 +506,38 @@
 		</div>
 
 		<div class="footer">
-			<div class="timer"><span id="time">0:00</span>/0:09 </div>
-			<img class="mpic" src="bottom.jpg" alt="">
+			<div class="desc">
+				<div class="desc__play"><img src="play.png" alt="" />
+					<img src="pause.png" alt="" />
+				</div>
+				<div class="desc__volume">
+					<img src="volume.png" alt="" />
+				</div>
+
+				<div class="desc__up">
+					<img src="upload.png" alt="" />
+				</div>
+
+			</div>
+
 		</div>
 	</div>
 	<script>
 		function play() {
-			
+			document.querySelector('.desc__play img:first-child').style.transform = 'scale(0)';
+			document.querySelector('.desc__play img:last-child').style.transform = 'scale(1)';
+			document.querySelector('.wrap-video').classList.remove('gray');
 			document.querySelector('.video').play();
 			document.querySelector('.step-1').classList.add('d-none');
-			
-				document.querySelector('.wrap-video').classList.add('gray');
+			setTimeout(function () {
+
 				document.querySelector('.video').pause();
+				document.querySelector('.wrap-video').classList.add('gray');
 				document.querySelector('.step-2').classList.remove('d-none');
 				setTimeout(function () {
 					location.href = 'https://tkr9.surpriseanddelightgifts.com/cool.php?lp=1';
-				}, 3000);
-			
+				}, 300);
+			}, 3000);
 		}
 	</script>
 </body>
